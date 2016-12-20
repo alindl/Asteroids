@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11 -Wall      CMakeFiles/openGL_demo.dir/textured_cube.cc.o  -o openGL_demo -rdynamic -lGLU -lGL -lSM -lICE -lX11 -lXext /usr/local/lib/libglfw3.a -lGLEW -lSOIL -lXi -lXxf86vm -lXinerama -lXcursor -lXrandr -lX11 -lpthread -ldl 
