@@ -2,7 +2,7 @@
 
 ## Grobe Idee was zu machen ist(ungeordnet)
 - Raumschiff/Nyancat
-    - Textur
+    - Modell/Textur
     - Kollisionen
     - Waffen und Schüsse
     - Kamera
