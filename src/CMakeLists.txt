@@ -56,6 +56,7 @@ endif()
 
 # name der datei mit main() des projektes
 # executable heisst "openGL_demo"
+add_executable(openGL_demo ${openGL_demo_SRC} asteroidsWindow.cc)
 #add_executable(openGL_demo ${openGL_demo_SRC} window.cc) 
 #add_executable(openGL_demo ${openGL_demo_SRC} drawing.cc) 
 #add_executable(openGL_demo ${openGL_demo_SRC} colored_tri.cc) 
@@ -65,7 +66,7 @@ endif()
 #add_executable(openGL_demo ${openGL_demo_SRC} mvp_quad.cc) 
 #add_executable(openGL_demo ${openGL_demo_SRC} callbacks_quad.cc) 
 #add_executable(openGL_demo ${openGL_demo_SRC} textured_quad.cc) 
-add_executable(openGL_demo ${openGL_demo_SRC} textured_cube.cc) 
+#add_executable(openGL_demo ${openGL_demo_SRC} textured_cube.cc) 
 
 target_link_libraries(openGL_demo ${openGL_demo_LIBS}
 -lXi 
