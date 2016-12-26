@@ -1,8 +1,8 @@
 # Asteroids 3D
 
 ## Grobe Idee was zu machen ist(ungeordnet)
-- Raumschiff/Nyancat
-    - Modell/Textur
+- Raumschiff
+    - Modell/Textur (fertiges gefunden)
     - Kollisionen
     - Waffen und Schüsse
     - Kamera
