@@ -1,5 +1,13 @@
 set( openGL_demo_SRC
 #  add additional files as needed
+#common/controls.o
+#common/shader.o
+#common/quaternion_utils.o
+#common/tangentspace.o
+#common/text2D.o
+#common/objloader.o
+#common/texture.o
+#common/vboindexer.o
 	)
 
 find_package(OpenGL REQUIRED)
@@ -56,7 +64,8 @@ endif()
 
 # name der datei mit main() des projektes
 # executable heisst "openGL_demo"
-add_executable(openGL_demo ${openGL_demo_SRC} asteroidsWindow.cc)
+add_executable(openGL_demo ${openGL_demo_SRC} model_rendered.cpp)
+#add_executable(openGL_demo ${openGL_demo_SRC} asteroidsWindow.cc)
 #add_executable(openGL_demo ${openGL_demo_SRC} window.cc) 
 #add_executable(openGL_demo ${openGL_demo_SRC} drawing.cc) 
 #add_executable(openGL_demo ${openGL_demo_SRC} colored_tri.cc) 
@@ -77,6 +86,7 @@ target_link_libraries(openGL_demo ${openGL_demo_LIBS}
 -lX11 
 -lpthread 
 -ldl
+-lassimp
 )
 	
 set_target_properties(openGL_demo PROPERTIES COMPILE_FLAGS "")

@@ -5,7 +5,7 @@
     - Modell/Textur (fertiges gefunden)
     - Kollisionen
     - Waffen und Schüsse
-    - Kamera
+    - Kamera (grob implementiert)
 - Welt
     - Skybox
     - (gefühlt) unendliche 3D 
@@ -17,10 +17,11 @@
     - Größe, Geschwindigkeit und Richtung
     - Textur
 - "Leben"
-- Menü
+
 
 
 ## Zusätzliche Features?
+- Menü
 - Minimap
 - Nyancat
 - Highscore

@@ -1,6 +1,8 @@
 /* standard includes */
 #include<stdio.h>
 #include<stdlib.h>
+#include <vector>
+#include <string>
 
 /* We use glew.h instead of gl.h to get all the GL prototypes declared */
 #include <GL/glew.h>
@@ -8,6 +10,15 @@
 #include <SOIL.h>
 /* GLFW is used for creating and manipulating graphics windows */
 #include<GLFW/glfw3.h>
+GLFWwindow* window;
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+using namespace std;
+
+#include <common/shader.hpp>
+#include <common/texture.hpp>
+#include <common/controls.hpp>
+#include <common/objloader.hpp>
 
 #define GLSL(src) "#version 330 core\n" #src
 
@@ -42,13 +53,13 @@ int main()
    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
    /* create GFLW window (monitor in windowed mode), do not share resources */
-   GLFWwindow* myWindow = glfwCreateWindow(WIDTH, HEIGHT, "OpenGL Demo", 
+    window = glfwCreateWindow(WIDTH, HEIGHT, "OpenGL Demo",
                                            NULL, NULL);
-   if (myWindow == NULL) {
+   if (window == NULL) {
       fprintf(stderr, "Cannot open GLFW window\n");
       exit(EXIT_FAILURE);
    }
-   glfwMakeContextCurrent(myWindow);
+   glfwMakeContextCurrent(window);
 
    /* initialization of GLEW */
    glewExperimental = GL_TRUE;
@@ -66,21 +77,26 @@ int main()
    /*                                                                        */
    /* event-handling and rendering loop                                      */
    /*                                                                        */
-   while (!glfwWindowShouldClose(myWindow)) {
+   while (!glfwWindowShouldClose(window)) {
+
       /* Swap buffers */
-      glfwSwapBuffers(myWindow);
+      glfwSwapBuffers(window);
 
       /* poll events */
       glfwPollEvents();
 
-      /* close window upon hitting the escape key */
-      if (glfwGetKey(myWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-         glfwSetWindowShouldClose(myWindow, GL_TRUE);
+      /* close window upon hitting the escape or Q key */
+      if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+         glfwSetWindowShouldClose(window, GL_TRUE);
+      if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+               glfwSetWindowShouldClose(window, GL_TRUE);
    }
 
    /*                                                                        */
    /* termination of GLFW                                                    */
    /*                                                                        */
+
+
    glfwTerminate();
 
    exit(EXIT_SUCCESS);
