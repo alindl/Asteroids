@@ -7,8 +7,8 @@
     - Waffen und Schüsse
     - Kamera (grob implementiert)
 - Welt
-    - Skybox
-    - (gefühlt) unendliche 3D 
+    - Skybox (müsste passen)
+    - (gefühlt) unendliche 3D (muss eigentlich garned sein) 
 - Steuerung im 3D
     - Beschleunigung/Entschleunigung
 - Asteroiden 

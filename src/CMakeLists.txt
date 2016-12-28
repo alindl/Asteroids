@@ -64,7 +64,7 @@ endif()
 
 # name der datei mit main() des projektes
 # executable heisst "openGL_demo"
-add_executable(openGL_demo ${openGL_demo_SRC} model_rendered.cpp)
+add_executable(openGL_demo ${openGL_demo_SRC} asteroids.cpp)
 #add_executable(openGL_demo ${openGL_demo_SRC} asteroidsWindow.cc)
 #add_executable(openGL_demo ${openGL_demo_SRC} window.cc) 
 #add_executable(openGL_demo ${openGL_demo_SRC} drawing.cc) 
