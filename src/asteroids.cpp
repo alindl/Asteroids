@@ -271,27 +271,27 @@ int main()
     // Set transformation matrices as an instance vertex attribute (with divisor 1)
     // NOTE: We're cheating a little by taking the, now publicly declared, VAO of the model's mesh(es) and adding new vertexAttribPointers
     // Normally you'd want to do this in a more organized fashion, but for learning purposes this will do.
-//    for(GLuint i = 0; i < rock.meshes.size(); i++)
-//    {
-//      GLuint VAO = rock.meshes[i].VAO;
-//      glBindVertexArray(VAO);
-//      // Set attribute pointers for matrix (4 times vec4)
-//      glEnableVertexAttribArray(3);
-//      glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)0);
-//      glEnableVertexAttribArray(4);
-//      glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(sizeof(glm::vec4)));
-//      glEnableVertexAttribArray(5);
-//      glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(2 * sizeof(glm::vec4)));
-//      glEnableVertexAttribArray(6);
-//      glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(3 * sizeof(glm::vec4)));
-//
-//      glVertexAttribDivisor(3, 1);
-//      glVertexAttribDivisor(4, 1);
-//      glVertexAttribDivisor(5, 1);
-//      glVertexAttribDivisor(6, 1);
-//
-//      glBindVertexArray(0);
-//    }
+    for(GLuint i = 0; i < rock.meshes.size(); i++)
+    {
+      GLuint VAO = rock.meshes[i].VAO;
+      glBindVertexArray(VAO);
+      // Set attribute pointers for matrix (4 times vec4)
+      glEnableVertexAttribArray(3);
+      glVertexAttribPointer(3, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)0);
+      glEnableVertexAttribArray(4);
+      glVertexAttribPointer(4, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(sizeof(glm::vec4)));
+      glEnableVertexAttribArray(5);
+      glVertexAttribPointer(5, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(2 * sizeof(glm::vec4)));
+      glEnableVertexAttribArray(6);
+      glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(glm::mat4), (GLvoid*)(3 * sizeof(glm::vec4)));
+
+      glVertexAttribDivisor(3, 1);
+      glVertexAttribDivisor(4, 1);
+      glVertexAttribDivisor(5, 1);
+      glVertexAttribDivisor(6, 1);
+
+      glBindVertexArray(0);
+    }
 
      // Draw in wireframe
 //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
