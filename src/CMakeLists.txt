@@ -8,6 +8,9 @@ set( openGL_demo_SRC
 #common/objloader.o
 #common/texture.o
 #common/vboindexer.o
+#texture.o
+#game_object.o
+#lazer.o
 	)
 
 find_package(OpenGL REQUIRED)

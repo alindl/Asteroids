@@ -28,15 +28,16 @@ GLuint screenWidth = 800, screenHeight = 600;
 
 // Function prototypes
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-//void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-//void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+void UpdatePew(GLfloat dt);
 void Do_Movement();
 GLuint loadTexture(GLchar const * path);
 GLuint loadCubemap(std::vector<std::string> faces);
 
 // Camera
-Camera camera(glm::vec3(0.0f, 100.0f, 155.0f)); //Wo die Kamera hingesetzt wird
+Camera camera(glm::vec3(0.0f, 100.0f, 155.0f));
 bool keys[1024];
 GLfloat lastX = 400, lastY = 300;
 bool firstMouse = true;
@@ -60,8 +61,8 @@ int main()
     // Set the required callback functions
     glfwSetKeyCallback(window, key_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
-//    glfwSetScrollCallback(window, scroll_callback);
-//    glfwSetMouseButtonCallback(window, mouse_button_callback);
+    glfwSetScrollCallback(window, scroll_callback);
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
     // Options
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
@@ -93,6 +94,37 @@ int main()
 
 #pragma region "object_initialization"
 
+
+//    GLfloat lazerRect[] = {
+//         //x    //y   //z
+//         0.0f,  0.5f, 0.0f, //Near Up     3
+//         0.0f,  0.5f, 9.0f, //Far  Up     8
+//         0.0f,  0.0f, 0.0f, //Near Middle 0
+//         0.0f,  0.0f, 0.0f, //Near Middle 0
+//         0.0f,  0.0f, 9.0f, //Far  Middle 5
+//         0.0f,  0.5f, 9.0f, //Far  Up     8
+//
+//        -0.5f,  0.0f, 0.0f, //Near Left   2
+//        -0.5f,  0.0f, 9.0f, //Far  Left   7
+//         0.0f,  0.0f, 0.0f, //Near Middle 0
+//         0.0f,  0.0f, 0.0f, //Near Middle 0
+//         0.0f,  0.0f, 9.0f, //Far  Middle 5
+//        -0.5f,  0.0f, 9.0f, //Far  Left   7
+//
+//         0.5f,  0.0f, 0.0f, //Near Right  1
+//         0.5f,  0.0f, 9.0f, //Far  Right  6
+//         0.0f,  0.0f, 0.0f, //Near Middle 0
+//         0.0f,  0.0f, 0.0f, //Near Middle 0
+//         0.0f,  0.0f, 9.0f, //Far  Middle 5
+//         0.5f,  0.0f, 9.0f, //Far  Right  6
+//
+//         0.0f, -0.5f, 0.0f, //Near Down   4
+//         0.0f, -0.5f, 9.0f,  //Far  Down  9
+//         0.0f,  0.0f, 0.0f, //Near Middle 0
+//         0.0f,  0.0f, 0.0f, //Near Middle 0
+//         0.0f,  0.0f, 9.0f, //Far  Middle 5
+//         0.0f, -0.5f, 9.0f  //Far  Down  9
+//    };
 
     GLfloat skyboxVertices[] = {
         // Positions
@@ -168,12 +200,12 @@ int main()
     glUniformMatrix4fv(glGetUniformLocation(instanceShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
     // Generate a large list of semi-random model transformation matrices
-    GLuint amount = 30000; // Die Menge der Asteroiden
+    GLuint amount = 30000;
     glm::mat4* modelMatrices;
     modelMatrices = new glm::mat4[amount];
     srand(glfwGetTime()); // initialize random seed
-    GLfloat radius = 150.0f; // Der Radius des Asteroidengürtel
-    GLfloat offset = 25.0f; // Die "Breite" des Asteroidengürtels
+    GLfloat radius = 150.0f;
+    GLfloat offset = 25.0f;
     for(GLuint i = 0; i < amount; i++)
     {
       glm::mat4 model;
@@ -188,7 +220,7 @@ int main()
       model = glm::translate(model, glm::vec3(x, y, z));
 
       // 2. Scale: Scale between 0.05 and 0.25f
-      GLfloat scale = (rand() % 20) / 100.0f + 0.05; // Die Größe der Asteroiden (100.0f + 0.05f sind die "Grenzen")
+      GLfloat scale = (rand() % 20) / 100.0f + 0.05;
       model = glm::scale(model, glm::vec3(scale));
 
       // 3. Rotation: add random rotation around a (semi)randomly picked rotation axis vector
@@ -234,7 +266,9 @@ int main()
 //    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     //Change Movement Speed
-    camera.MovementSpeed = 60.0f; // Die Schnelligkeit des "Raumschiffes"
+    camera.MovementSpeed = 60.0f;
+
+    glm::vec3 pewPos = glm::vec3(camera.Position.x, camera.Position.y, camera.Position.z);
 
     // Game loop
     while(!glfwWindowShouldClose(window))
@@ -243,6 +277,7 @@ int main()
       GLfloat currentFrame = glfwGetTime();
       deltaTime = currentFrame - lastFrame;
       lastFrame = currentFrame;
+
 
       // Check and call events
       glfwPollEvents();
@@ -279,7 +314,7 @@ int main()
 
         glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);
       // Draw skybox as last
-//      glDepthMask(GL_FALSE);// Remember to turn depth writing off (bindet asteroiden an kamera?)
+//      glDepthMask(GL_FALSE);// Remember to turn depth writing off (bindet asteroidet an kamera?)
       glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
       skyboxShader.Use();
       view = glm::mat4(glm::mat3(camera.GetViewMatrix()));  // Remove any translation component of the view matrix
@@ -412,12 +447,18 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
-//void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
-//{if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){}} // Does nothing for now
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
 
-//void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-//{
-//    camera.ProcessMouseScroll(yoffset);
-//}
+    }
+
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    camera.ProcessMouseScroll(yoffset);
+}
 
 #pragma endregion
