@@ -1,17 +1,32 @@
 #version 330 core
-layout (location = 0) in vec3 position;
-layout (location = 1) in vec3 normal;
 
-out vec3 Normal;
-out vec3 Position;
+// Input vertex data, different for all executions of this shader.
+layout(location = 0) in vec3 squareVertices;
 
-uniform mat4 model;
-uniform mat4 view;
-uniform mat4 projection;
+// Output data ; will be interpolated for each fragment.
+out vec2 UV;
+
+// Values that stay constant for the whole mesh.
+uniform vec3 CameraRight_worldspace;
+uniform vec3 CameraUp_worldspace;
+uniform mat4 VP; // Model-View-Projection matrix, but without the Model (the position is in BillboardPos; the orientation depends on the camera)
+uniform vec3 BillboardPos; // Position of the center of the billboard
+uniform vec2 BillboardSize; // Size of the billboard, in world units (probably meters)
 
 void main()
 {
-    gl_Position = projection * view * model * vec4(position, 1.0f);
-    Normal = mat3(transpose(inverse(model))) * normal;
-    Position = vec3(model * vec4(position, 1.0f));
-}  
+	vec3 particleCenter_wordspace = BillboardPos;
+	
+	vec3 vertexPosition_worldspace = 
+		particleCenter_wordspace
+		+ CameraRight_worldspace * squareVertices.x * BillboardSize.x
+		+ CameraUp_worldspace * squareVertices.y * BillboardSize.y;
+
+
+	// Output position of the vertex
+	gl_Position = VP * vec4(vertexPosition_worldspace, 1.0f);
+
+	// UV of the vertex. No special space for this one.
+	UV = squareVertices.xy + vec2(0.5, 0.5);
+}
+

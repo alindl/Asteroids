@@ -14,10 +14,16 @@
 #include <learnopengl/camera.h>
 #include <learnopengl/model.h>
 
+#include "LearnOpenGL/resource_manager.h"
+#include "LearnOpenGL/sprite_renderer.h"
+#include "LearnOpenGL/game_object.h"
+#include "LearnOpenGL/shader.h"
+
 // GLM Mathemtics
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <glm/ext.hpp>
 
 // Other Libs
 #include <SOIL.h>
@@ -43,6 +49,9 @@ bool firstMouse = true;
 
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
+
+SpriteRenderer    *Renderer;
+GameObject        *Player;
 
 // The MAIN function, from here we start our application and run our Game loop
 int main()
@@ -89,7 +98,7 @@ int main()
 //    Model ourModel("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/rock/rock.obj");
 //    Model pew("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/lazer/lazer.obj");
     Model rock("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/rock/rock.obj");
-    Model planet("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/planet/planet.obj");
+//    Model planet("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/planet/planet.obj");
 
 #pragma region "object_initialization"
 
@@ -168,7 +177,7 @@ int main()
     glUniformMatrix4fv(glGetUniformLocation(instanceShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
     // Generate a large list of semi-random model transformation matrices
-    GLuint amount = 30000; // Die Menge der Asteroiden
+    GLuint amount = 30; // Die Menge der Asteroiden
     glm::mat4* modelMatrices;
     modelMatrices = new glm::mat4[amount];
     srand(glfwGetTime()); // initialize random seed
@@ -188,12 +197,14 @@ int main()
       model = glm::translate(model, glm::vec3(x, y, z));
 
       // 2. Scale: Scale between 0.05 and 0.25f
-      GLfloat scale = (rand() % 20) / 100.0f + 0.05; // Die Größe der Asteroiden (100.0f + 0.05f sind die "Grenzen")
+      GLfloat scale = (rand() % 20) / 10000.0f + 5.00; // Die Größe der Asteroiden
       model = glm::scale(model, glm::vec3(scale));
 
       // 3. Rotation: add random rotation around a (semi)randomly picked rotation axis vector
       GLfloat rotAngle = (rand() % 360);
       model = glm::rotate(model, rotAngle, glm::vec3(0.4f, 0.6f, 0.8f));
+
+//      std::cout<<glm::to_string(model)<<std::endl;
 
       // 4. Now add to list of matrices
       modelMatrices[i] = model;
@@ -263,14 +274,16 @@ int main()
       glActiveTexture(GL_TEXTURE0); // Activate proper texture unit before binding
       glUniform1i(glGetUniformLocation(instanceShader.Program, "texture_diffuse1"), 0); // Now set the sampler to the correct texture unit
       glBindTexture(GL_TEXTURE_2D, rock.textures_loaded[0].id); // Note we also made the textures_loaded vector public (instead of private) from the model class.
+
       for(GLuint i = 0; i < rock.meshes.size(); i++)
       {
         glBindVertexArray(rock.meshes[i].VAO);
         glDrawElementsInstanced(GL_TRIANGLES, rock.meshes[i].indices.size(), GL_UNSIGNED_INT, 0, amount);
         glBindVertexArray(0);
+//        std::cout<<rock.meshes[i].indices.size()<<std::endl;
       }
 
-      // reset our texture binding
+      // reset our texture binding (useless?)
       glActiveTexture(GL_TEXTURE0);
       glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -291,7 +304,7 @@ int main()
       glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);
       glDrawArrays(GL_TRIANGLES, 0, 36);
       glBindVertexArray(0);
-      glDepthFunc(GL_LESS); // Set depth function back to default
+//      glDepthFunc(GL_LESS); // Set depth function back to default
 
       // Swap the buffers
       glfwSwapBuffers(window);
@@ -299,7 +312,7 @@ int main()
 
     delete[] modelMatrices;
     // Properly de-allocate all resources once they've outlived their purpose
-//    glDeleteVertexArrays(1, &VAO);
+    glDeleteVertexArrays(1, &skyboxVAO);
     glfwTerminate();
     return 0;
 }

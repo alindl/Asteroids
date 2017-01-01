@@ -11,6 +11,14 @@ set( openGL_demo_SRC
 #texture.o
 #game_object.o
 #lazer.o
+#LearnOpenGL/ball_object.o
+#LearnOpenGL/game_level.o
+#LearnOpenGL/game_object.o
+#LearnOpenGL/resource_manager.o
+#LearnOpenGL/shader.o
+#LearnOpenGL/sprite_renderer.o
+#LearnOpenGL/texture.o
+#LearnOpenGL/game.o
 	)
 
 find_package(OpenGL REQUIRED)
@@ -67,6 +75,7 @@ endif()
 
 # name der datei mit main() des projektes
 # executable heisst "openGL_demo"
+#add_executable(openGL_demo ${openGL_demo_SRC} LearnOpenGL/program.cpp)
 add_executable(openGL_demo ${openGL_demo_SRC} asteroids.cpp)
 #add_executable(openGL_demo ${openGL_demo_SRC} asteroidsWindow.cc)
 #add_executable(openGL_demo ${openGL_demo_SRC} window.cc) 
