@@ -1,8 +1,9 @@
 # Asteroids 3D
-
-  cd src/
+  cmake .;
+  make;
+  cd src;
   g++ -c -std=c++0x resource_manager.cpp game_object.cpp ball_object.cpp aster_object.cpp game_level.cpp sprite_renderer.cpp game.cpp 
-  
+  ./openGL_demo
 
 
 ## Grobe Idee was zu machen ist(ungeordnet)
