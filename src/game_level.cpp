@@ -37,7 +37,7 @@ GLboolean GameLevel::IsCompleted()
 void GameLevel::init(GLuint amount, GLfloat radius, GLfloat offset)
 {
   srand(glfwGetTime());
-  Model rock("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/asteroid/asteroid.obj");
+  Model rock("asteroid/asteroid.obj");
   for(GLuint i = 0; i < amount; i++)
       {
         glm::mat4 model;

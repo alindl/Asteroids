@@ -22,12 +22,12 @@ Shader ResourceManager::LoadShader(const GLchar *vShaderFile, const GLchar *fSha
 
 GLuint ResourceManager::LoadSkybox()
 {
-  faces.push_back("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/skybox/right.png");
-  faces.push_back("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/skybox/left.png");
-  faces.push_back("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/skybox/top.png");
-  faces.push_back("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/skybox/bottom.png");
-  faces.push_back("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/skybox/back.png");
-  faces.push_back("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/skybox/front.png");
+  faces.push_back("skybox/right.png");
+  faces.push_back("skybox/left.png");
+  faces.push_back("skybox/top.png");
+  faces.push_back("skybox/bottom.png");
+  faces.push_back("skybox/back.png");
+  faces.push_back("skybox/front.png");
   skyboxTexture = loadCubemap(faces);
   return skyboxTexture;
 }

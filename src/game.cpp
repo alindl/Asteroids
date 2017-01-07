@@ -162,6 +162,6 @@ GLboolean Game::CheckOOR(BallObject &one) // Ball too far away
   GLfloat distance =  ((camera.Position.x - one.Position.x) * (camera.Position.x - one.Position.x) +
                        (camera.Position.y - one.Position.y) * (camera.Position.y - one.Position.y) +
                        (camera.Position.z - one.Position.z) * (camera.Position.z - one.Position.z));
-  GLboolean boom = distance > 100000;
+  GLboolean boom = distance > 10000000;
   return boom;
 }

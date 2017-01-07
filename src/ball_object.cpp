@@ -1,10 +1,10 @@
 #include "ball_object.h"
 
 BallObject::BallObject()
-    : GameObject(), Radius(2.0f), Stuck(true), model("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/lazer/lazer.obj")  { }
+    : GameObject(), Radius(2.0f), Stuck(true), model("lazer/lazer.obj")  { }
 
 BallObject::BallObject(glm::vec3 pos, GLfloat radius)
-    :  GameObject(pos, glm::vec3(radius * 2, radius * 2, radius * 2)), Radius(radius), Stuck(true), model("/home/panda/MEGA/Uni/5. Semester/CG/Asteroids/src/lazer/lazer.obj") { }
+    :  GameObject(pos, glm::vec3(radius * 2, radius * 2, radius * 2)), Radius(radius), Stuck(true), model("lazer/lazer.obj") { }
 
 glm::vec3 BallObject::Move(GLfloat dt, Camera camera)
 {
@@ -28,7 +28,7 @@ void BallObject::Shoot(GLfloat dt, Camera camera)
     this->Stuck = false;
     glm::vec3 oldPos = this->Position;
     this->Position += camera.Front;
-    this->Velocity = glm::vec3(this->Position - oldPos);
+    this->Velocity = glm::vec3(this->Position - oldPos) * 5.0f;
   }
 }
 
