@@ -8,9 +8,6 @@ set( openGL_demo_SRC
 #common/objloader.o
 #common/texture.o
 #common/vboindexer.o
-#texture.o
-#game_object.o
-#lazer.o
 #LearnOpenGL/ball_object.o
 #LearnOpenGL/game_level.o
 #LearnOpenGL/game_object.o
@@ -19,6 +16,15 @@ set( openGL_demo_SRC
 #LearnOpenGL/sprite_renderer.o
 #LearnOpenGL/texture.o
 #LearnOpenGL/game.o
+
+aster_object.o
+ball_object.o
+game_level.o
+game_object.o
+resource_manager.o
+sprite_renderer.o
+#texture.o
+game.o
 	)
 
 find_package(OpenGL REQUIRED)
