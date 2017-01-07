@@ -31,3 +31,9 @@
 .cproject
 .project
 .settings/
+src/common/
+src/planet/
+src/textures/
+src/shaders/
+src/LearnOpenGL/
+src/levels/

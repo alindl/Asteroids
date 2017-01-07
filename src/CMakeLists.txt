@@ -1,29 +1,11 @@
 set( openGL_demo_SRC
 #  add additional files as needed
-#common/controls.o
-#common/shader.o
-#common/quaternion_utils.o
-#common/tangentspace.o
-#common/text2D.o
-#common/objloader.o
-#common/texture.o
-#common/vboindexer.o
-#LearnOpenGL/ball_object.o
-#LearnOpenGL/game_level.o
-#LearnOpenGL/game_object.o
-#LearnOpenGL/resource_manager.o
-#LearnOpenGL/shader.o
-#LearnOpenGL/sprite_renderer.o
-#LearnOpenGL/texture.o
-#LearnOpenGL/game.o
-
 aster_object.o
 ball_object.o
 game_level.o
 game_object.o
 resource_manager.o
 sprite_renderer.o
-#texture.o
 game.o
 	)
 
