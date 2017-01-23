@@ -1,13 +1,8 @@
-set( openGL_demo_SRC
-#  add additional files as needed
-aster_object.o
-ball_object.o
-game_level.o
-game_object.o
-resource_manager.o
-sprite_renderer.o
-game.o
-	)
+file(GLOB openGL_demo_SRC
+    *.h
+    *.cpp
+)
+
 
 find_package(OpenGL REQUIRED)
 if( OPENGL_FOUND )
