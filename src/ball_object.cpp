@@ -8,14 +8,14 @@ BallObject::BallObject(glm::vec3 pos, GLfloat radius)
 
 glm::vec3 BallObject::Move(GLfloat dt, Camera camera)
 {
-    // If not stuck to player
+    // If not stuck to player ship
     if (!this->Stuck)
     {
-        // Move the ball
+        // Move the Lazer
         this->Position += this->Velocity * dt * 200.0f;
     }
     else
-    {
+    {// Lazer to player ship position
       this->Position = camera.Position;
     }
     return this->Position;
@@ -23,16 +23,15 @@ glm::vec3 BallObject::Move(GLfloat dt, Camera camera)
 
 void BallObject::Shoot(GLfloat dt, Camera camera)
 {
-  if (this->Stuck)
+  if (this->Stuck)// If Lazer is at the player ship
   {
     this->Stuck = false;
-    glm::vec3 oldPos = this->Position;
     this->Position += camera.Front;
-    this->Velocity = glm::vec3(this->Position - oldPos) * 5.0f;
+    this->Velocity = camera.Front * 5.0f;
   }
 }
 
-// Resets the ball to initial Stuck Position (if ball is outside window bounds)
+// Resets the ball to initial Stuck Position at the ship
 void BallObject::Reset(Camera camera)
 {
     this->Position = camera.Position;
@@ -42,5 +41,5 @@ void BallObject::Reset(Camera camera)
 
 void BallObject::Draw(SpriteRenderer &renderer, Camera camera)
 {
-    renderer.DrawLazer(this->model, camera,this->Velocity ,this->Position);
+    renderer.DrawLazer(this->model, camera, this->Velocity, this->Position);
 }

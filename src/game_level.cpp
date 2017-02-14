@@ -1,7 +1,5 @@
 #include "game_level.h"
 
-#include <fstream>
-#include <sstream>
 #include <algorithm>
 
 void GameLevel::Load(GLuint amount, GLfloat radius, GLfloat offset)
@@ -16,14 +14,16 @@ void GameLevel::Load(GLuint amount, GLfloat radius, GLfloat offset)
 
 void GameLevel::Draw(SpriteRenderer &renderer, Camera camera)
 {
-    for(int i = 0; i < this->Asteroids.size(); i++)
+  for(GLuint i = 0; i < this->Asteroids.size(); i++)
+  {
+    AsterObject &asteroid = this->Asteroids[i];
+    if (!asteroid.Destroyed)
     {
-      AsterObject &asteroid = this->Asteroids[i];
-      if (!asteroid.Destroyed)
-          asteroid.Draw(renderer, camera, i);
-          glActiveTexture(GL_TEXTURE0);
-          glBindTexture(GL_TEXTURE_2D, 0);
+      asteroid.Draw(renderer, camera, i);
+      glActiveTexture(GL_TEXTURE0);
+      glBindTexture(GL_TEXTURE_2D, 0);
     }
+  }
 }
 
 GLboolean GameLevel::IsCompleted()
@@ -51,7 +51,7 @@ void GameLevel::init(GLuint amount, GLfloat radius, GLfloat offset)
         GLfloat z = cos(angle) * radius + displacement;
         model = glm::translate(model, glm::vec3(x, y, z));
 
-        // 2. Scale: Scale between 0.05 and 0.25f
+        // 2. Scale:
         GLfloat scale = (rand() % 20) / 10000.0f + 5.00; // Die Größe der Asteroiden
         model = glm::scale(model, glm::vec3(scale));
 
@@ -94,7 +94,8 @@ void GameLevel::init(GLuint amount, GLfloat radius, GLfloat offset)
       glBindBuffer(GL_ARRAY_BUFFER, 0);
       glBindVertexArray(0);
 
-      for(GLuint i = 0; i < amount; i++){
+      for(GLuint i = 0; i < amount; i++)
+      {
         AsterObject obj(glm::vec3(0.0f), radius);
         glm::vec4 minBox = glm::vec4(-2.0f, -2.0f, -2.0f, 1.0f);
         glm::vec4 maxBox = glm::vec4(2.0f, 2.0f, 2.0f, 1.0f);

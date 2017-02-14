@@ -6,6 +6,7 @@
 SpriteRenderer  *Renderer;
 BallObject      *Lazer;
 Camera          camera(glm::vec3(0.0f, 100.0f, 155.0f));
+GLboolean       ShootBool = false;
 
 
 Game::Game(GLuint width, GLuint height) 
@@ -15,7 +16,6 @@ Game::Game(GLuint width, GLuint height)
 Game::~Game()
 {
     delete Renderer;
-    delete Lazer;
 }
 
 void Game::Init()
@@ -26,10 +26,9 @@ void Game::Init()
     ResourceManager::LoadShader("skybox/skybox.vs", "skybox/skybox.frag", nullptr, "skybox");
     ResourceManager::LoadShader("lazer/lazer.vs", "lazer/lazer.frag", nullptr, "lazer");
 
-
     glm::mat4 projection =  glm::perspective(45.0f, (GLfloat)Width/(GLfloat)Height, 1.0f, 10000.0f);
-    GLuint skyboxTexture = ResourceManager::LoadSkybox();
 
+    ResourceManager::LoadSkybox();
     Shader skyboxShader, lazerShader, asteroidShader;
     skyboxShader = ResourceManager::GetShader("skybox");
     asteroidShader = ResourceManager::GetShader("asteroid");
@@ -42,7 +41,6 @@ void Game::Init()
 
     lazerShader.Use();
     glUniformMatrix4fv(glGetUniformLocation(lazerShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
 
     GameLevel one; one.Load(100, 150.0f, 250.0f);
     this->Levels.push_back(one);
@@ -63,7 +61,15 @@ void Game::Update(GLfloat dt)
 
 void Game::ProcessInput(GLfloat dt)
 {
-    // Camera controls
+    // This is to ensure that it doesn't fire immediately again if an Asteroid is very close
+    if(!this->Keys[GLFW_KEY_SPACE] && ShootBool)
+    {
+      ShootBool = false;
+      Lazer->Shoot(dt,camera);
+    }
+    if(this->Keys[GLFW_KEY_SPACE])
+      ShootBool = true;
+
     if(this->Keys[GLFW_KEY_W])
       camera.ProcessKeyboard(FORWARD, dt);
     if(this->Keys[GLFW_KEY_S])
@@ -80,9 +86,6 @@ void Game::ProcessInput(GLfloat dt)
       camera.ProcessKeyboard(YAWLEFT, dt);
     if(this->Keys[GLFW_KEY_RIGHT])
       camera.ProcessKeyboard(YAWRIGHT, dt);
-    if(this->Keys[GLFW_KEY_SPACE]){
-      Lazer->Shoot(dt,camera);
-    }
 }
 
 void Game::Render()
@@ -90,8 +93,6 @@ void Game::Render()
     if (this->State == GAME_ACTIVE)
     {
       this->Levels[this->Level].Draw(*Renderer, camera);
-      glActiveTexture(GL_TEXTURE0);
-      glBindTexture(GL_TEXTURE_2D, 0);
       Lazer->Draw(*Renderer, camera);
       GLuint mySkyTex;
       mySkyTex = ResourceManager::GetSkyboxTex();
@@ -162,6 +163,6 @@ GLboolean Game::CheckOOR(BallObject &one) // Ball too far away
   GLfloat distance =  ((camera.Position.x - one.Position.x) * (camera.Position.x - one.Position.x) +
                        (camera.Position.y - one.Position.y) * (camera.Position.y - one.Position.y) +
                        (camera.Position.z - one.Position.z) * (camera.Position.z - one.Position.z));
-  GLboolean boom = distance > 10000000;
+  GLboolean boom = distance > 10000000; // Some value for a far enough distance until reset
   return boom;
 }

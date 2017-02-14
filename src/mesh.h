@@ -13,7 +13,8 @@ using namespace std;
 #include "shader.h"
 
 
-struct Vertex {
+struct Vertex
+{
     // Position
     glm::vec3 Position;
     // Normal
@@ -26,13 +27,15 @@ struct Vertex {
     glm::vec3 Bitangent;
 };
 
-struct Texture {
+struct Texture
+{
     GLuint id;
     string type;
     aiString path;
 };
 
-class Mesh {
+class Mesh
+{
 public:
     /*  Mesh Data  */
     vector<Vertex> vertices;
@@ -139,6 +142,3 @@ private:
         glBindVertexArray(0);
     }
 };
-
-
-

@@ -2,7 +2,7 @@
 // Std. Includes
 #include <string>
 #include <fstream>
-#include <sstream>
+//#include <sstream>
 #include <iostream>
 #include <map>
 #include <vector>
@@ -17,8 +17,6 @@ using namespace std;
 #include <assimp/postprocess.h>
 
 #include "mesh.h"
-
-
 
 class Model 
 {
@@ -225,8 +223,3 @@ private:
     }
 
 };
-
-
-
-
-

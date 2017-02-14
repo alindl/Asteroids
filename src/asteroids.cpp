@@ -26,7 +26,7 @@ using namespace glm;
 // Properties
 GLuint SCREEN_WIDTH = 800, SCREEN_HEIGHT = 600;
 
-// Function prototypes
+// Function prototype
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 bool keys[1024];
@@ -51,9 +51,8 @@ int main()
     GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Asteroids 3D", nullptr, nullptr); // Windowed
     glfwMakeContextCurrent(window);
 
-    // Set the required callback functions
+    // Set the required callback function
     glfwSetKeyCallback(window, key_callback);
-    // Options
 
     // Initialize GLEW to setup the OpenGL Function pointers
     glewExperimental = GL_TRUE;
