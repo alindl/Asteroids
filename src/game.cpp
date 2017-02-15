@@ -1,7 +1,5 @@
 #include "game.h"
 
-
-
 // Game-related State data
 SpriteRenderer  *Renderer;
 BallObject      *Lazer;
@@ -42,7 +40,7 @@ void Game::Init()
     lazerShader.Use();
     glUniformMatrix4fv(glGetUniformLocation(lazerShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-    GameLevel one; one.Load(100, 150.0f, 250.0f);
+    GameLevel one; one.Load(10, 150.0f, 250.0f);
     this->Levels.push_back(one);
     this->Level = 0;
     Renderer->modelMatrices = one.modelMatrices;
@@ -56,8 +54,12 @@ void Game::Update(GLfloat dt)
     Lazer->Move(dt, camera);
     // Check for collisions
     this->DoCollisions();
+    if (this->State == GAME_ACTIVE)
+    {
+      if(this->Levels[this->Level].IsCompleted() == GL_TRUE)
+        this->State = GAME_WIN;
+    }
 }
-
 
 void Game::ProcessInput(GLfloat dt)
 {
@@ -86,6 +88,10 @@ void Game::ProcessInput(GLfloat dt)
       camera.ProcessKeyboard(YAWLEFT, dt);
     if(this->Keys[GLFW_KEY_RIGHT])
       camera.ProcessKeyboard(YAWRIGHT, dt);
+    if(this->Keys[GLFW_KEY_LEFT_SHIFT])
+      camera.ProcessKeyboard(BOOST, dt);
+    if(!this->Keys[GLFW_KEY_LEFT_SHIFT])
+      camera.ChangeSpeed(60.0f);
 }
 
 void Game::Render()
@@ -117,14 +123,18 @@ void Game::DoCollisions()
         {
             if (this->CheckCollisionAtoS(asteroid))
             {
+              asteroid.Destroyed = GL_TRUE;
               this->ResetPlayer();
               Lazer->Reset(camera);
 
             }
-            if (this->CheckCollisionAtoL(asteroid, *Lazer))
+            if(!Lazer->Stuck)
             {
-               asteroid.Destroyed = GL_TRUE;
-               Lazer->Reset(camera);
+              if (this->CheckCollisionAtoL(asteroid, *Lazer))
+              {
+                asteroid.Destroyed = GL_TRUE;
+                Lazer->Reset(camera);
+              }
             }
         }    
     }

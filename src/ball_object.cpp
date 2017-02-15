@@ -12,7 +12,7 @@ glm::vec3 BallObject::Move(GLfloat dt, Camera camera)
     if (!this->Stuck)
     {
         // Move the Lazer
-        this->Position += this->Velocity * dt * 200.0f;
+        this->Position += this->Velocity * dt * 150.0f;
     }
     else
     {// Lazer to player ship position

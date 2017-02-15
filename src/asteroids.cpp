@@ -70,7 +70,6 @@ int main()
     // Start Game within Menu State
     Asteroids.State = GAME_ACTIVE;
 
-
     // Setup some OpenGL options
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -78,6 +77,8 @@ int main()
     // Game loop
     while(!glfwWindowShouldClose(window))
     {
+      if(Asteroids.State == GAME_WIN)
+        glfwSetWindowShouldClose(window, GL_TRUE);
       // Set frame time
       GLfloat currentFrame = glfwGetTime();
       deltaTime = currentFrame - lastFrame;
@@ -97,9 +98,9 @@ int main()
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
       Asteroids.Render();
 
-      // reset our texture binding (useless?)
-      glActiveTexture(GL_TEXTURE0);
-      glBindTexture(GL_TEXTURE_2D, 0);
+      // reset our texture binding
+//      glActiveTexture(GL_TEXTURE0);
+//      glBindTexture(GL_TEXTURE_2D, 0);
 
       // Swap the buffers
       glfwSwapBuffers(window);

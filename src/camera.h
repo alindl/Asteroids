@@ -22,6 +22,7 @@ enum Camera_Movement {
     YAWRIGHT,
     PITCHUP,
     PITCHDOWN,
+    BOOST
 };
 
 // Default camera values
@@ -103,6 +104,8 @@ public:
             this->Pitch += LOOKSENS;
         if (direction == PITCHDOWN)
             this->Pitch -= LOOKSENS;
+        if (direction == BOOST)
+            ChangeSpeed(180.0f);
 
         if (this->Pitch > 89.0f)
             this->Pitch = 89.0f;
