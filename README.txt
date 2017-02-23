@@ -17,14 +17,22 @@ Viel Spass und Erfolg beim Experimentieren mit OpenGL!
 
 
 
+====================================================================================
 
 
+     _        _                 _     _       _____ ____    
+    / \   ___| |_ ___ _ __ ___ (_) __| |___  |___ /|  _ \ _ 
+   / _ \ / __| __/ _ \ '__/ _ \| |/ _` / __|   |_ \| | | (_)
+  / ___ \\__ \ ||  __/ | | (_) | | (_| \__ \  ___) | |_| |_ 
+ /_/   \_\___/\__\___|_|  \___/|_|\__,_|___/ |____/|____/(_)
+                                                            
 
-Asteroids 3D:
 
 Zusaetzlich benoetigte Librarys: ASSIMP (http://assimp.org/) fuer das laden der 3D Modelldateien
 
-Kompilierung ist unveraendert wie oben von Ihnen beschrieben.
+Kompilieren, ausfuehren und loeschen ist unveraendert wie oben von Ihnen beschrieben.
+
+Befehle zum kopieren: (im Asteroids_3D Ordner) cmake .; make; cd src; ./openGL_demo
 
 Steuerung: 
 
@@ -33,10 +41,10 @@ Steuerung:
   A - Bewegung nach Links
   S - Bewegung nach Hinten
   D - Bewegung nach Rechts
-  Pfeiltaste Oben   - Kamera nach Oben 
-  Pfeiltaste Links  - Kamera nach Links
-  Pfeiltaste Unten  - Kamera nach Unten
-  Pfeiltaste Rechts - Kamera nach Rechts
+  Pfeiltaste Oben   - Kamera nach Oben schwenken 
+  Pfeiltaste Links  - Kamera nach Links schwenken
+  Pfeiltaste Unten  - Kamera nach Unten schwenken
+  Pfeiltaste Rechts - Kamera nach Rechts schwenken
   Umschalttaste/Shift Links - Boost (Erhoeht die Geschwindigkeit waehrend des Haltens auf das Dreifache)
   Leertaste - Schuss des Lazers (Schuss wird erst beim Loslassen der Taste abgefeuert)
   H - Schummeltaste, zerstoert einen Asteroiden
@@ -51,4 +59,4 @@ Der Spieler hat insgesamt 4 Leben, in der rechten oberen Ecke wird die Anzahl de
 
 Es sind 10 Asteroiden um den Spieler verteilt. Die Anzahl der restlichen Asteroiden wird in der linken oberen Ecke angezeigt.
 
-Das Spiel beendet sich, wenn alle Asteroiden zerstoert oder alle Leben verbraucht wurden.
+Wenn alle Asteroiden zerstoert oder alle Leben verbraucht wurden, wird das Spiel beendet.
