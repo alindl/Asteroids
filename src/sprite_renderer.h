@@ -15,11 +15,13 @@ class SpriteRenderer
 {
 public:
     // Constructor (inits shaders/shapes)
-  SpriteRenderer(Shader &skyboxShader, Shader &asteroidShader, Shader &lazerShader);
+  SpriteRenderer(Shader &skyboxShader, Shader &asteroidShader, Shader &lazerShader, Shader &lifeShader, Shader &countShader);
     // Destructor
     ~SpriteRenderer();
     void DrawAsteroid(Model rock, Camera camera, GLuint index);
+    void DrawCount(Model rock, Camera camera, glm::vec3 pos);
     void DrawLazer(Model lazer, Camera camera, glm::vec3 velocity, glm::vec3 pos);
+    void DrawLife(Model life, Camera camera, glm::vec3 pos);
     void DrawSkybox(GLuint texture, Camera camera);
     glm::mat4* modelMatrices;
 private:
@@ -28,7 +30,10 @@ private:
     GLuint asteroidVAO;
 
     Shader lazerShader;
-    GLuint lazerVAO;
+
+    Shader lifeShader;
+
+    Shader countShader;
 
     Shader skyboxShader;
     GLuint skyboxVAO;

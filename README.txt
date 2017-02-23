@@ -39,8 +39,16 @@ Steuerung:
   Pfeiltaste Rechts - Kamera nach Rechts
   Umschalttaste/Shift Links - Boost (Erhoeht die Geschwindigkeit waehrend des Haltens auf das Dreifache)
   Leertaste - Schuss des Lazers (Schuss wird erst beim Loslassen der Taste abgefeuert)
+  H - Schummeltaste, zerstoert einen Asteroiden
   
+
 Der Spieler wird an den Anfangspunkt gesetzt wenn er in einen Asteroiden fliegt, der Asteroid selbst wird dabei zerstoert.
-Wenn der Lazer abgefeuert wurde, aber keinen Asteroiden trifft, dann fliegt der Lazer absichtlich unangenehm lange weiter,
+
+Wenn der Lazer abgefeuert wurde, aber keinen Asteroiden trifft, dann fliegt der Schuss absichtlich unangenehm lange weiter,
 denn es kann waehrenddessen nicht erneut geschossen werden.
-Das Spiel beendet sich, wenn der letzte Asteroid zerstoert wurde.
+
+Der Spieler hat insgesamt 4 Leben, in der rechten oberen Ecke wird die Anzahl der restlichen Leben angezeigt.
+
+Es sind 10 Asteroiden um den Spieler verteilt. Die Anzahl der restlichen Asteroiden wird in der linken oberen Ecke angezeigt.
+
+Das Spiel beendet sich, wenn alle Asteroiden zerstoert oder alle Leben verbraucht wurden.

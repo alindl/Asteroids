@@ -1,12 +1,16 @@
 #include "sprite_renderer.h"
 
 
-SpriteRenderer::SpriteRenderer(Shader &skyboxShader, Shader &asteroidShader, Shader &lazerShader)
+SpriteRenderer::SpriteRenderer(Shader &skyboxShader, Shader &asteroidShader, Shader &lazerShader, Shader &lifeShader , Shader &countShader)
 {
   this->skyboxShader = skyboxShader;
   this->initSkyboxRenderData();
 
   this->lazerShader = lazerShader;
+
+  this->lifeShader = lifeShader;
+
+  this->countShader = countShader;
 
   this->asteroidShader = asteroidShader;
 }
@@ -25,10 +29,41 @@ void SpriteRenderer::DrawLazer(Model lazer, Camera camera, glm::vec3 velocity, g
 
     glm::mat4 shootModel;
     shootModel = glm::translate(shootModel, velocity + pos);
-    glUniformMatrix4fv(glGetUniformLocation(asteroidShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(shootModel));
+    glUniformMatrix4fv(glGetUniformLocation(lazerShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(shootModel));
 
     glUniform3f(glGetUniformLocation(lazerShader.Program, "spriteColor"), 1.0f, 0.0f, 0.0f);
     lazer.Draw(lazerShader);
+}
+
+void SpriteRenderer::DrawLife(Model life, Camera camera, glm::vec3 pos)
+{
+    // Prepare transformations
+    this->lifeShader.Use();
+    glUniformMatrix4fv(glGetUniformLocation(lifeShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(camera.GetViewMatrix()));
+
+    glm::mat4 lifeGUI;
+    lifeGUI = glm::translate(lifeGUI, pos);
+    GLfloat scale = 0.02; // Die Größe der Asteroiden
+    lifeGUI = glm::scale(lifeGUI, glm::vec3(scale));
+    glUniformMatrix4fv(glGetUniformLocation(lifeShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(lifeGUI));
+
+    glUniform3f(glGetUniformLocation(lifeShader.Program, "spriteColor"), 1.0f, 0.0f, 0.0f);
+    life.Draw(lifeShader);
+}
+
+void SpriteRenderer::DrawCount(Model rock, Camera camera, glm::vec3 pos)
+{
+    // Prepare transformations
+    this->countShader.Use();
+    glUniformMatrix4fv(glGetUniformLocation(countShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(camera.GetViewMatrix()));
+
+    glm::mat4 countGUI;
+    countGUI = glm::translate(countGUI, pos);
+    GLfloat scale = 0.08f; // Die Größe der Asteroiden
+    countGUI = glm::scale(countGUI, glm::vec3(scale));
+    glUniformMatrix4fv(glGetUniformLocation(countShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(countGUI));
+
+    rock.Draw(countShader);
 }
 
 void SpriteRenderer::DrawAsteroid(Model rock, Camera camera, GLuint index)

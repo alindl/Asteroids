@@ -11,24 +11,33 @@
 #include "sprite_renderer.h"
 #include "aster_object.h"
 #include "ball_object.h"
+#include "aster_count.h"
+#include "life_object.h"
 #include "camera.h"
 #include "shader.h"
 
 // Represents the current state of the game
 enum GameState {
     GAME_ACTIVE,
-    GAME_WIN
+    GAME_WIN,
+    GAME_LOSE
 };
 
 class Game
 {
 public:
     // Game state
-    GameState              State;	
-    GLboolean              Keys[1024];
-    GLuint                 Width, Height;
-    std::vector<GameLevel> Levels;
-    GLuint                 Level;
+    GameState                  State;
+    GLboolean                  Keys[1024];
+    GLuint                     Width, Height;
+    std::vector<GameLevel>     Levels;
+    std::vector<LifeObject*>   Lives;
+    std::vector<CountObject*>  Asts;
+    GLuint                     Level;
+    GLboolean                  ShootBool = false;
+    GLboolean                  CheatBool = false;
+    GLuint                     liveCounter;
+    GLuint                     astCounter;
     // Constructor/Destructor
     Game(GLuint width, GLuint height);
     ~Game();

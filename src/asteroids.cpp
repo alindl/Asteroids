@@ -79,6 +79,8 @@ int main()
     {
       if(Asteroids.State == GAME_WIN)
         glfwSetWindowShouldClose(window, GL_TRUE);
+      if(Asteroids.State == GAME_LOSE)
+        glfwSetWindowShouldClose(window, GL_TRUE);
       // Set frame time
       GLfloat currentFrame = glfwGetTime();
       deltaTime = currentFrame - lastFrame;
