@@ -1,11 +1,13 @@
-
+<!---
      _        _                 _     _       _____ ____    
     / \   ___| |_ ___ _ __ ___ (_) __| |___  |___ /|  _ \ _ 
    / _ \ / __| __/ _ \ '__/ _ \| |/ _` / __|   |_ \| | | (_)
   / ___ \\__ \ ||  __/ | | (_) | | (_| \__ \  ___) | |_| |_ 
  /_/   \_\___/\__\___|_|  \___/|_|\__,_|___/ |____/|____/(_)
                                                             
+-->
 
+Asteroids 3D:
 
  Unter anderem ASSIMP installieren (wahrscheinlich noch paar Sachen, füg ich dann hier dazu)  
 
@@ -33,7 +35,7 @@
     - Generator (No, Level wird zuerst generiert)
     - Größe, Geschwindigkeit und Richtung (fertig, nein, nein)
     - Textur (fertig)
-- "Leben" (werden einfach zum Start teleportiert)
+- "Leben" (fertig)
 
 
 
